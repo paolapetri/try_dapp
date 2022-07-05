@@ -24,7 +24,6 @@ def init_login_manager(app):
         :param user_id: The address of the user to search for in w3 accounts
         :return: the user object
         """
-        # Return a User object searching in w3 accounts by address
         accounts = w3.eth.accounts
         for account in accounts:
             if account == user_id:

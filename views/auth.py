@@ -18,12 +18,14 @@ auth = Blueprint("auth", __name__)
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
+    # Login method that displays all accounts and allows user to select one to login
     if request.method == "GET":
         return render_template("login.html", user = current_user, accounts = w3.eth.accounts, notifications_count = 0)
     address = request.form.get("account")
     if not address:
         abort(400)
     if w3.isAddress(address):
+        # initialize session variables
         session['address'] = address
         session['subscribed'] = False
         flash("Successfully authenticated", "success")
