@@ -1,0 +1,83 @@
+<!-- Lottery page for user -->
+<!DOCTYPE html>
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+<style>
+    body {
+        font-family: 'Anek Malayalam', sans-serif;
+    }
+</style>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<!-- button to subscribe to the lottery notifications -->
+{% if subscribed == False %}
+<form action="/lottery/subscribe" style ="text-align: center; margin-top: 100px" method="GET">
+    <input id="subscribed" name="subscribed" type="hidden" value="{{ true }}">
+    <button style="font-size: xx-large; text-align: center; align-items:center; align-content: center; color: white; background-color: #418db6; height: 300px; width: 900px; border-radius: 5%;" type="submit" class="btn btn-primary">Subscribe to the lottery!</button>
+</form>
+{% else %}
+{% if isRoundActive == false %}
+<div class="alert alert-warning alert-dismissible fade show"
+    style="font-size: xx-large; text-align: center; margin-top: 30px; padding: 50px 0;" role="alert">
+    <h4 class="alert-heading">Oh no!</h4>
+    <p>The lottery round is not open yet! Check later :(</p>
+</div>
+<a style="margin:auto; text-align: center; align-items:center; align-content: center; color: white; background-color: #418db6;"
+    href="\">
+    <button type="button" role="button"
+        style="margin: auto; background-color: #418db6; padding: 30px 30px; text-align: center; font-size: larger ;"
+        class="btn btn-primary"> Home
+    </button>
+</a>
+{% else %}
+{%if error != ""%}
+<!--Display an error msg-->
+<div class="alert alert-danger alert-dismissible fade show"
+    style="font-size: large; text-align: center; margin-top: 30px; padding: 50px 0;" role="alert">
+    <p>{{error}}</p>
+</div>
+{% endif %}
+<form style="text-align: center; margin-top: 30px; margin-right: 400px; margin-left: 400px;" method="post" action="/lottery">
+    <div class="form-group">
+        <label for="firstnumber">First Number</label>
+        <input required type="number" max="69" min="1" class="form-control" name="firstnumber" id="firstnumber"
+            placeholder="Enter the first number">
+    </div>
+    <div class="form-group">
+        <label for="secondnumber">Second Number</label>
+        <input required type="number" max="69" min="1" class="form-control" name="secondnumber" id="secondnumber"
+            placeholder="Enter the second number">
+    </div>
+    <div class="form-group">
+        <label for="thirdnumber">Third Number</label>
+        <input required type="number" max="69" min="1" class="form-control" name="thirdnumber" id="thirdnumber"
+            placeholder="Enter the third number">
+    </div>
+    <div class="form-group">
+        <label for="fourthnumber">Fourth Number</label>
+        <input required type="number" max="69" min="1" class="form-control" name="fourthnumber" id="fourthnumber"
+            placeholder="Enter the fourth number">
+    </div>
+    <div class="form-group">
+        <label for="fifthnumber">Fifth Number</label>
+        <input required type="number" max="69" min="1" class="form-control" name="fifthnumber" id="fifthnumber"
+            placeholder="Enter the fifth number">
+    </div>
+    <div class="form-group" style="margin: auto; color: rgb(214, 29, 29)">
+        <label for="powerballNumber">Powerball Number</label>
+        <input required type="number" max="26" min="1" class="form-control" name="powerballnumber" id="powerballNumber"
+            placeholder="Enter the powerball number">
+    </div>
+
+    <button type="submit" style="margin-top: 20px; background-color: #418db6;" class="btn btn-primary">Buy
+        ticket</button>
+</form>
+</div>
+
+{% endif %}
+{% endif %}

@@ -1,0 +1,28 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+
+<div class="container" style="margin-top: 32px; width: 500px;">
+    <!-- create a card with input from to authenticate -->
+    <div class="card" style="text-align: center;">
+        <div class="card-header">
+            <h5 class="card-title">Login</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/login">
+                <div class="form-group">
+                    <!--<label for="address">Address</label>-->
+                            <select name="account">
+                                {% for account in accounts %}
+                                <option value="{{ account }}">{{ account }}</option>
+                                {% endfor %}
+                              </select>
+                        
+                    <!--<input type="text" class="form-control" id="address" name="address"placeholder="Address">-->
+                </div>
+                
+                <button style=" background-color: #418db6; border: none;" type="submit"
+                    class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>

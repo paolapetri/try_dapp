@@ -1,0 +1,84 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@500&display=swap" rel="stylesheet">
+
+<head>
+    <style>
+        .nav-link .badge {
+            position: absolute;
+            top: -1px;
+            right: -14px;
+            padding: 5px 10px;
+            border-radius: 70%;
+            background: red;
+            opacity: 70%;
+            color: white;
+        }
+    </style>
+</head>
+<script>
+    // reload mailbox every 30 seconds
+    $(document).ready(function () {
+        setInterval(function () {
+            console.log('reloaded')
+            $("#mailbox").load(window.location.href + " #mailbox");
+        }, 5000);
+    });
+</script>
+
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar sticky-top navbar-expand-md navbar-light" style=" margin: auto; background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); font-family:  'Anek Malayalam', sans-serif;">
+
+        <!-- large screen size -->
+        <ul class="navbar-nav ml-auto" style="align-items: center;">
+            <!--<li class="nav-item dropdown" style="margin-left: 18px; margin-right:32px">
+                <a class="nav-link" href="/accounts" role="button">
+                    Accounts
+                </a>
+            </li>-->
+            <li class="nav-item dropdown" style="margin-left: 18px; margin-right:32px">
+                <a class="nav-link" href="/" role="button">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item dropdown" style="margin-left: 18px; margin-right:32px">
+                <a class="nav-link" href="/lottery" role="button">
+                    Lottery
+                </a>
+            </li>
+            {% if user.role == "USER" %}
+            <li id="mailbox" class="nav-item dropdown" style="margin-left: 18px; margin-right:32px">
+                <a href="/notifications" class="nav-link" role="button">
+                    <span>Notifications</span>
+                    {% if notifications_count > 0 %}
+                    <span class="badge">{{notifications_count}}</span>
+                    {% endif %}
+                </a>
+            </li>
+            {%endif%}
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown" style="margin-left: 18px; margin-right:32px">
+                <a href="/logout" class="nav-link" role="button">
+                    Logout
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item dropdown" style="margin-left: 18px; margin-right:32px">
+                <a href="/login" class="nav-link" role="button">
+                    Login
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div id="flash" class="alert alert-warning" style="margin: 16px;" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}

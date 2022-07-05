@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+<html>
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@300&display=swap" rel="stylesheet">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<style type="text/css">
+body {
+	font-family: 'Anek Malayalam', sans-serif;
+}
+#container {
+	max-width:auto;
+	margin:0 auto;
+	padding: 20px;
+	text-align: center;
+}
+#griglia {
+  padding: 0;
+  margin: 0;
+}
+#griglia  li {
+  border: 5px ;
+  display: inline-block;
+  width: 150px;
+  margin: 10px;
+  vertical-align: middle;
+}
+#griglia li  p {
+  padding: 5px 5px 0 5px;
+  margin: 0;
+  font-size: 12px;
+  color: #fff;
+}
+</style>
+</head>
+<body>
+  <!--visualize balance and role-->
+<h1 style="text-align: center; margin:auto; margin-top: 40px; color: #418db6 ">
+  <p>Hi {{current_user.id}}!</p>
+  {% if current_user.role == "USER"%}
+  <p>Your balance is: {{balance}}</p>
+  {% endif %}
+</h1>
+<div id="container">
+<ul id="griglia">
+    {% for collectible in collectibles %}
+   <li> <div class="card" style="border-radius: 25px; text-align: center;">
+
+   <a href="{{ url_for('static', filename='images/collectibles/'+collectible) }}">
+
+        <img style="height: 50px; margin: 16px;"
+            src="{{ url_for('static', filename='images/collectibles/'+collectible) }}" alt={{ collectible
+            }}>
+    </a>
+    <div class="card-body">
+        
+        <form method="post" action="/mint">
+            <input id="collectible" name="collectible" type="hidden" value="{{ collectible }}">
+
+            <button style=" background-color: #418db6; border: none;" type="submit"
+                class="btn btn-primary">Mint</button>
+        </form>
+        
+    </div>
+</div></li>
+    {% endfor %}
+</div>
+</body>
+</html>

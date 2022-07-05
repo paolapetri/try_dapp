@@ -1,0 +1,79 @@
+<!-- Lottery page for manager -->
+<!DOCTYPE html>
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@300&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Anek Malayalam', sans-serif;
+  }
+
+  .btn-xlarge {
+    padding: 80px 130px;
+    font-size: 100px;
+    border-radius: 40%;
+    background-color: #418db6;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+  }
+
+  .btn-xlarge:hover {
+    background-color: #418db6;
+    opacity: 70%;
+  }
+</style>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+{% if error != "" %}
+<!--Display an error msg-->
+<div class="alert alert-danger alert-dismissible fade show"
+  style=" padding: 40px 150px; margin: auto; margin-top: 30px; " role="alert">
+  <p>{{error}}</p>
+</div>
+{% endif %}
+{% if isLotteryActive == false %}
+<form method="get" action="/lottery/start">
+  <div class="text_center" style="text-align: center; margin-top: 100px; "><button type="submit"
+      class="btn btn-primary btn-xlarge">Start lottery!</button>
+</form>
+
+{% elif isRoundActive == false and isLotteryActive == true and prizes == true %}
+
+<form method="get" action="/lottery/round">
+  <div class="text_center" style="text-align: center; margin-top: 100px; "><button type="submit"
+      class="btn btn-primary btn-xlarge">Start round!</button>
+</form>
+{% elif (isRoundActive == true and isLotteryActive == true) or prizes == false %}
+<div class="text_center" style="text-align: center; margin-top: 100px; ">
+  <a class="navbar-brand" href="\" role="button">
+    <nav class="navbar navbar-light"
+      style="background-color: #418db6; color: black; text-align: center; margin-top: 10px; padding:60px 200px ">Buy NFT
+    </nav>
+  </a>
+  <a class="navbar-brand" href="\lottery\drawnumbers" role="button">
+    <nav class="navbar navbar-light"
+      style="background-color: #418db6; text-align: center; color: black; opacity: 90%; margin-top: 10px; padding:60px 200px ">
+      Draw Numbers
+    </nav>
+  </a>
+  <form method="get" action="\lottery\assignprizes">
+    <a class="navbar-brand" href="\lottery\assignprizes" role="button">
+    <nav class="navbar navbar-light"
+      style=" background-color: #418db6; text-align: center; color: black; opacity: 70%; padding: 60px 200px; ">
+      Assign Prizes</nav></a>
+    
+  </form>
+  <form method="get" action="\lottery\destroylottery">
+    <a class="navbar-brand" href="\lottery\destroylottery" role="button">
+    <nav class="navbar navbar-light"
+      style="background-color: #b64141; text-align: center; color: black; margin-top: 40px; opacity: 50%; padding: 30px 50px; ">
+      Close Lottery</nav></a>
+    
+  </form>
+</div>
+{% endif %}
+
+</div>

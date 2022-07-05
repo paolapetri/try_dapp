@@ -1,0 +1,51 @@
+<!-- Lottery page for manager -->
+<!DOCTYPE html>
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@300&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Anek Malayalam', sans-serif;
+  }
+</style>
+{% if current_user.role == "USER" and subscribed == False%}
+<div class="alert alert-warning alert-dismissible fade show"
+  style="font-size: large; text-align: center; margin-top: 30px; padding: 50px 0;" role="alert">
+  <p>You have not subscribed to the lottery!</p>
+  <a style="margin:auto; text-align: center; align-items:center; align-content: center; color: white; background-color: #418db6;"
+    href="\">
+    <button type="button" role="button"
+      style="margin: auto; background-color: #418db6; padding: 30px 30px; text-align: center; font-size: larger ;"
+      class="btn btn-primary"><span class="bi bi-arrow-return-left"> Home</span>
+    </button>
+  </a>
+</div>
+{%endif%}
+<!--{% if current_user.role == "MANAGER"%}
+<div class="alert alert-warning alert-dismissible fade show"
+  style="font-size: large; text-align: center; margin-top: 30px; padding: 50px 0;" role="alert">
+  <p>You are the manager!</p>
+</div>
+  <a style="margin:auto; text-align: center; align-items:center; align-content: center; color: white; background-color: #418db6;"
+    href="\">
+    <button type="button" role="button"
+      style="margin: auto; background-color: #418db6; padding: 30px 30px; text-align: center; font-size: larger ;"
+      class="btn btn-primary"><span class="bi bi-arrow-return-left"> Home</span>
+    </button>
+  </a>
+
+{%endif%}-->
+<!--display all events-->
+{%for event in events %}
+<div class="alert alert-info" style="margin-top: 10px; padding: 10px 10px; margin-left: 400px; margin-right: 400px;" role="alert">
+  {{event}}
+</div>
+{%endfor%}
+{% if subscribed == True and events != []%}
+<form action="/notifications/deleteall" style ="text-align: center; margin-top: 100px" method="GET">
+  <button style="font-size: xx-large; text-align: center; align-items:center; align-content: center; color: white; background-color: #418db6; height: 100px; width: 300px; border-radius: 5%;" type="submit" class="btn btn-primary">Delete all</button>
+</form>
+{% endif %}
