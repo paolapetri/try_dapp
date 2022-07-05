@@ -42,7 +42,7 @@ def index():
     # i.e. with owner = 0x0000000000000000000000000000000000000000
     collectibles_free = []
     if not Contract.CONTRACTS_DEPLOYED:
-        return render_template("index2.html", user = current_user, collectibles=collectibles_free, balance=balance, notifications_count=notifications_count)
+        return render_template("index2.html", user = current_user, collectibles=collectibles_free, balance=balance, notifications_count=0)
     for collectible in collectibles:
         curr_id = int(collectible.replace(".jpg", ""))
         if Contract.nft_instance.functions.ownerOf(curr_id).call() == "0x0000000000000000000000000000000000000000":
@@ -126,7 +126,7 @@ def lottery():
             return render_template("lottery_manager.html", user = current_user, prizes = prizes, isLotteryActive = isLotteryActive, isRoundActive=isRoundActive, error = error_msg, notifications_count = 0)
         if(current_user.role == 'USER'):
             subscribed = session['subscribed']
-            if(subscribed == True):
+            if(subscribed == True) and Contract.CONTRACTS_DEPLOYED:
                 calculate_notifications()
                 notifications_count = len(session.get('events', []))
             else:
@@ -389,6 +389,7 @@ def assign_prizes():
 
 def calculate_notifications():
     if not Contract.CONTRACTS_DEPLOYED:
+        session['events'] = []
         return
     
     events_entries = (
@@ -453,4 +454,4 @@ def delete_all_notifications():
     if request.method == "GET":
         session['events'] = []
         notifications_count = 0
-        return render_template("notifications.html", events = [], user = current_user, subscribed = session['subscribed'], notifications_count = notifications_count)
+        return render_template("notifications.html", events = [], user = current_user, subscribed = session['subscribed'], notifications_count = 0)
