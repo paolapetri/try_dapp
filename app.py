@@ -8,7 +8,7 @@ from flask import Flask
 # create a web3.py instance w3 by connecting to the local Ethereum node
 w3 = Web3(HTTPProvider("http://localhost:8545"))
 # Initialize a local account object from the private key of a valid Ethereum node address
-owner = w3.eth.account.from_key("0x3131ee7c1defa56c3204fcc053f4dcaeebb1f08cd182846be1144008548ec034")
+owner = w3.eth.account.from_key("0xd22de7f99104560e88989244284429fccfe73ae2a5acc44014bead3dc76179af")
 
 
 executor = Executor() 

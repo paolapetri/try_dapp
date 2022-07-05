@@ -16,7 +16,7 @@ contract NFT_Lottery {
     event roundStart(uint256 startingBlock, uint256 endingBlock);
     event roundEnd();
 
-    event mintToken(address to, uint256 tokenId, string description);
+    event mintToken(address to, uint256 tokenId, string description, uint256 class);
 
     event boughtTicket(address user, uint256 firstNumber, uint256 secondNumber, uint256 thirdNumber, uint256 fourthNumber, uint256 fifthNumber, uint256 powerballNumber);
 
@@ -132,20 +132,19 @@ contract NFT_Lottery {
     /// @dev Throws unless `msg.sender` is the lottery manager
     /// @dev Throws unless the lottery is active
     /// @param nftImage The string containing a description of the collectible
-    /// @param classNum The class of the collectible (useful if the class list is empty and 
     /// the lottery manager has to generate the collectible of a particular class to give it as a prize
-    function buyCollectibles(string memory nftImage, uint256 classNum, uint256 id) public {
+    function buyCollectibles(string memory nftImage, uint256 id) public {
         require(msg.sender == lotteryManager, "Only the lottery manager can buy collectibles");
         require(isLotteryActive, "Lottery smart contract is not active");
-        require(classNum >=1 && classNum <= 8, "Class number is not valid");
-      
+
+        uint256 classNum =  (uint256(keccak256(abi.encode(blockhash(end + K), K, end, block.number))) % 8) +1;      
         // id of the collectible is a counter incremented by 1 each time a collectible is minted to give it a unique id
         // add collectible to the class mapping
         collectibleClasses[classNum].push(Collectible(id, nftImage, true));
 
         // mint the collectible
         nft.createToken(id, nftImage);
-        emit mintToken(msg.sender, id, nftImage);
+        emit mintToken(msg.sender, id, nftImage, classNum);
     }
 
     function createLottery() public {

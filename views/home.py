@@ -86,8 +86,7 @@ def mint():
                     "gasPrice": w3.toWei("40", "gwei"),
                 }
                 # random class number
-                classprize = randint(1,10000)%8
-                tx_hash = Contract.lottery_instance.functions.buyCollectibles(collectible, classprize, id).transact(
+                tx_hash = Contract.lottery_instance.functions.buyCollectibles(collectible, id).transact(
                     tx
                 )
                 bid_txn_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
@@ -398,6 +397,7 @@ def calculate_notifications():
             + Contract.draw_numbers_event.get_all_entries()
             + Contract.prizes_assigned_event.get_all_entries()
             + Contract.round_start_event.get_all_entries()
+            + Contract.mint_event.get_all_entries()
         )
     
     # Order by block number the first block is the latest
@@ -407,7 +407,8 @@ def calculate_notifications():
         block_id = e.blockNumber
         event = e.event
         args = e.args
-        if block_id <= session['start_notifications'] or event == "mintToken":
+        print(event)
+        if block_id <= session['start_notifications']: # or event == "mintToken":
             continue
         block_id = str(e.blockNumber)
         # Check if the event is already notified
@@ -429,7 +430,10 @@ def calculate_notifications():
                     session['events'].append("Round Started")
                 elif event == "drawing":
                     session['events'].append("Numbers Drawn: "+str(args.get('firstNumber'))+ ", " + str(args.get("secondNumber")) + ", " + str(args.get("thirdNumber")) + ", " + str(args.get("fourthNumber")) + ", " + str(args.get("fifthNumber")) + ", " + str(args.get("powerballNumber")))
-               
+                elif event == "mintToken":
+                    print("siiiiiiiiiiiiiiiiii")
+                    session['events'].append("Token Minted" + str(args.get("class")))
+
 @home.route("/notifications", methods=["GET"])
 @login_required
 def notifications():

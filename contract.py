@@ -10,6 +10,7 @@ class Contract:
     lottery_instance = None
 
     lottery_start_event = None
+    mint_event = None
     round_start_event = None
     token_minted = None
     lottery_close_event = None
@@ -85,5 +86,5 @@ class Contract:
         Contract.lottery_close_event = (Contract.lottery_instance.events.closeLottery.createFilter(fromBlock=1, toBlock="latest"))
         Contract.draw_numbers_event = (Contract.lottery_instance.events.drawing.createFilter(fromBlock=1, toBlock="latest"))
         Contract.prizes_assigned_event = (Contract.lottery_instance.events.assignPrize.createFilter(fromBlock=1, toBlock="latest"))
-        Contract.token_minted = (Contract.lottery_instance.events.mintToken.createFilter(fromBlock=1, toBlock="latest"))
+        Contract.mint_event = (Contract.lottery_instance.events.mintToken.createFilter(fromBlock=1, toBlock="latest"))
         Contract.CONTRACTS_DEPLOYED = True
